@@ -6,11 +6,10 @@ import {
 import './index.css';
 import App from './App';
 
-const docRoot = document.getElementById('root') as HTMLElement
+const docRoot = document.getElementById('root') as HTMLElement;
 const root = ReactDOM.createRoot(docRoot);
 root.render(
   <Router>
     <App />
-  </Router>
+  </Router>,
 );
-
