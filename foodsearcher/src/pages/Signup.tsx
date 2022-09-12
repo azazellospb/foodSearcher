@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import veryfyUserData from '../tools/verifier';
+import verifyUserData from '../tools/verifier';
 import UserDataHandlerToLS from '../utils/userDataWriter';
 import styles from './Auth.module.css';
 
@@ -13,7 +13,7 @@ export default function Signup() {
   function handleSubmit(event: React.FormEvent) {
     event.preventDefault();
     const user = new UserDataHandlerToLS();
-    const userDataCheck = veryfyUserData(password, name, email);
+    const userDataCheck = verifyUserData(password, name, email);
     const doesUserExist = user.hasSuchUser(email);
     if (doesUserExist) {
       setMsg('Such user already exist.');
