@@ -1,10 +1,11 @@
-import React from 'react'
+import React from 'react';
 import {
   Routes,
   Route,
-} from 'react-router-dom'
+} from 'react-router-dom';
 import './App.css';
-import Layout from './components/Layout'
+import Layout from './components/Layout';
+import Auth from './pages/Auth';
 import Home from './pages/Home';
 
 function App() {
@@ -12,6 +13,7 @@ function App() {
     <Routes>
       <Route path="/" element={<Layout />}>
         <Route index element={<Home />} />
+        <Route path="/auth" element={<Auth />} />
       </Route>
     </Routes>
   );

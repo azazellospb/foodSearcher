@@ -31,5 +31,6 @@
     "@typescript-eslint"
   ],
   "rules": {
+    "@typescript-eslint/semi": ["error", "always"]
   }
 }
