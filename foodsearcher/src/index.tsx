@@ -11,6 +11,5 @@ const root = ReactDOM.createRoot(docRoot);
 root.render(
   <Router>
     <App />
-  </Router>
+  </Router>,
 );
-

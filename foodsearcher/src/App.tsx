@@ -5,15 +5,17 @@ import {
 } from 'react-router-dom';
 import './App.css';
 import Layout from './components/Layout';
-import Auth from './pages/Auth';
 import Home from './pages/Home';
+import Signin from './pages/Signin';
+import Signup from './pages/Signup';
 
 function App() {
   return (
     <Routes>
       <Route path="/" element={<Layout />}>
         <Route index element={<Home />} />
-        <Route path="/auth" element={<Auth />} />
+        <Route path="/signin" element={<Signin />} />
+        <Route path="/signup" element={<Signup />} />
       </Route>
     </Routes>
   );
