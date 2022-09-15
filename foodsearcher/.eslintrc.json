@@ -39,6 +39,7 @@
   ],
   "rules": {
     "@typescript-eslint/semi": ["error", "always"],
-    "linebreak-style": ["error", "windows"]
+    "linebreak-style": ["error", "windows"],
+    "import/prefer-default-export": "off"
   }
 }

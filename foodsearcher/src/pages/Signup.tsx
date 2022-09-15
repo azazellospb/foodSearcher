@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import verifyUserData from '../tools/verifier';
+import { verifyUserData } from '../tools/verifier';
 import UserDataHandlerToLS from '../utils/userDataWriter';
 import styles from './Auth.module.css';
 

@@ -1,5 +1,5 @@
 /* eslint-disable class-methods-use-this */
-import UserData from '../types/models';
+import { UserData } from '../types/models';
 import UserDataHandler from './UserDataHandler';
 
 export default class UserDataHandlerToLS extends UserDataHandler {

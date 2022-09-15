@@ -1,4 +1,4 @@
-import UserData from '../types/models';
+import { UserData } from '../types/models';
 
 export default abstract class UserDataHandler {
   abstract setUserData(data: UserData): void;
