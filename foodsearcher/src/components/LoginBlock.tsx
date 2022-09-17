@@ -8,13 +8,16 @@ export default function LoginBlock() {
   const user = new UserDataHandlerToLS();
   const { name } = user.getCurrentUser();
   const logOut = () => {
+    localStorage.removeItem('currentUser');
     navigate('/');
   };
 
   if (name) {
     return (
       <div className={styles.login}>
-        <span className={`${styles.userName}`}>{name}</span>
+        <span className={styles.userName}>{name}</span>
+        <Link to="/favorites" className={styles.loginBtn}>Favorites</Link>
+        <Link to="/history" className={styles.loginBtn}>Search history</Link>
         <button className={styles.logoutBtn} type="button" onClick={logOut}>Выйти</button>
       </div>
     );

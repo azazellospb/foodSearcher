@@ -14,29 +14,6 @@ export default class UserDataHandlerToLS extends UserDataHandler {
     } throw new Error('Can not find user name');
   }
 
-  // setOnlineStatus(email: string): void {
-  //   if (localStorage.getItem(`foodSearcher-${email}`)) {
-  //     const userData: UserData = JSON.parse(localStorage.getItem(`foodSearcher-${email}`) || '');
-  //     userData.status = 'online';
-  //     localStorage.setItem(`foodSearcher-${email}`, JSON.stringify(userData));
-  //   } throw new Error('Can not set status');
-  // }
-
-  // setOfflineStatus(email: string): void {
-  //   if (localStorage.getItem(`foodSearcher-${email}`)) {
-  //     const userData: UserData = JSON.parse(localStorage.getItem(`foodSearcher-${email}`) || '');
-  //     userData.status = 'offline';
-  //     localStorage.setItem(`foodSearcher-${email}`, JSON.stringify(userData));
-  //   } throw new Error('Can not set status');
-  // }
-
-  // getStatus(email: string): string {
-  //   if (localStorage.getItem(`foodSearcher-${email}`)) {
-  //     const userData: UserData = JSON.parse(localStorage.getItem(`foodSearcher-${email}`) || '');
-  //     return userData.status as string;
-  //   } throw new Error('Can not get status');
-  // }
-
   hasSuchUser(email: string): boolean {
     return !!localStorage.getItem(`foodSearcher-${email}`);
   }
@@ -51,6 +28,19 @@ export default class UserDataHandlerToLS extends UserDataHandler {
   setCurrentUser(email: string): void {
     const name = this.getName(email);
     localStorage.setItem('currentUser', JSON.stringify({ name, email }));
+  }
+
+  setHistory(email: string, query: string): void {
+    const userData: UserData = JSON.parse(localStorage.getItem(`foodSearcher-${email}`) as string);
+    if (!userData.history) userData.history = [];
+    if (userData.history[userData.history.length - 1] !== query) userData.history.push(query);
+    localStorage.setItem(`foodSearcher-${email}`, JSON.stringify(userData));
+  }
+
+  getLastQuery(email:string): string {
+    const userData: UserData = JSON.parse(localStorage.getItem(`foodSearcher-${email}`) as string);
+    if (!userData.history) return '';
+    return userData.history[userData.history.length - 1];
   }
 
   getCurrentUser() {

@@ -1,26 +1,21 @@
+/* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
+import { UseFormRegisterReturn } from 'react-hook-form';
 
 export default function Dropdown(props: {
   placeHolder: string,
   options: string[],
-  value: string,
-  onValueChange: (optionValue: string) => void
+  onValueChange: UseFormRegisterReturn<string>
 }) {
   const {
     placeHolder,
     options,
-    value,
     onValueChange,
   } = props;
-  function handleChange(event: React.ChangeEvent<HTMLSelectElement>) {
-    onValueChange(event.target.value);
-  }
   return (
     <select
-      name={placeHolder}
-      value={value}
       placeholder={placeHolder}
-      onChange={handleChange}
+      {...onValueChange}
     >
       <option value="" disabled>{`Select ${placeHolder}`}</option>
       {

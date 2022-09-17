@@ -10,5 +10,6 @@ export default abstract class UserDataHandler {
   abstract verifyLogin(email: string, password: string): boolean;
   abstract setCurrentUser(email: string): void;
   abstract getCurrentUser(): { email: string, name: string };
-  // abstract getPreferences(): string;
+  abstract setHistory(email: string, query: string): void;
+  abstract getLastQuery(email: string): string;
 }

@@ -3,6 +3,7 @@ export interface UserData {
   email: string,
   password: string,
   status?: string,
+  history: string[]
 }
 
 export interface QueryParams {
@@ -18,4 +19,16 @@ export interface QueryParams {
 
 export interface PropState {
   searchPath: string;
+}
+
+export interface UserState {
+  isOnline: boolean
+  user: User,
+}
+
+interface User {
+  email: string,
+  favourites: string[],
+  history: string[],
+  name: string,
 }

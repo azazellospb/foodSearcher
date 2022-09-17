@@ -1,4 +1,24 @@
-.loginBtn {
-  display: inline-block;
-  background: url('./../../public/Sign_in_icon.png') center;
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
+
+.login,
+.loginblock {
+  display: flex;
+  gap: 20px;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.login > a,
+.loginblock > a {
+  color: orangered;
+}
+
+.login > a:hover,
+.loginblock > a:hover {
+  text-decoration: underline;
+}
+
+.userName {
+  color: orangered;
+  font-size: 1.2rem;
 }

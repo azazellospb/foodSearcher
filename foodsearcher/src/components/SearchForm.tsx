@@ -1,77 +1,67 @@
+/* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable prefer-const */
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React from 'react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
 import styles from './SearchForm.module.css';
 import * as List from '../types/optionLists';
 import Dropdown from './Dropdown';
+import { QueryParams } from '../types/models';
 import { makeUrl } from '../tools/urlMaker';
+import { useAppDispatch } from '../redux/hooks';
+import { addHistory } from '../redux/userSlice';
 
 export default function SearchForm() {
-  const [cuisineType, setCuisineType] = useState('');
-  const [diet, setDiet] = useState('');
-  const [mealType, setMealType] = useState('');
-  const [dishType, setDishType] = useState('');
-  const [q, setQ] = useState('');
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  let [skip, setSkip] = useState(true);
-  const params = {
-    cuisineType,
-    dishType,
-    diet,
-    mealType,
-    q,
-  };
-  if (!params.q) params.q = 'i'; // necessary query key
-  const urlWithQuery = makeUrl(params);
-  function handleInput(event: React.ChangeEvent<HTMLInputElement>) {
-    setQ(event.target.value);
+  const [searchParams] = useSearchParams();
+  const { register, handleSubmit } = useForm<QueryParams>({
+    defaultValues: {
+      q: searchParams.get('q') ?? '',
+      cuisineType: searchParams.get('cuisineType') ?? '',
+      dishType: searchParams.get('dishType') ?? '',
+      diet: searchParams.get('diet') ?? '',
+      mealType: searchParams.get('mealType') ?? '',
+    },
+  });
+  function onSubmit(obj: QueryParams) {
+    const newObj = { ...obj };
+    navigate('/search');
+    const query = makeUrl(newObj as QueryParams);
+    dispatch(addHistory(query));
   }
-  function handleSubmit(event: React.FormEvent) {
-    setSkip(false);
-    event.preventDefault();
-    navigate('/search', { replace: false, state: { searchPath: urlWithQuery } });
-  }
-  useEffect(() => {
-    setSkip(true);
-  }, [skip]);
   return (
     <form
       className={styles.form}
-      onSubmit={handleSubmit}
+      onSubmit={handleSubmit(onSubmit)}
     >
+      Please set up search parameters
       <div>
         <div>
           <label htmlFor="dishtype">
             Type key word:
-            <input type="input" value={q} onChange={handleInput} placeholder="Type your recipe here" />
+            <input type="input" {...register('q')} autoComplete="off" placeholder="Type your recipe here" />
           </label>
         </div>
-        Possible filters:
-        <br />
-        <div>
-          <label htmlFor="dishtype">
-            Dish type
-            <Dropdown value={dishType} onValueChange={(value) => setDishType(value)} placeHolder="Cuisine type" options={List.dishTypeList} />
-          </label>
-        </div>
-        <br />
+        <label htmlFor="dishType">
+          Dish type
+          <Dropdown onValueChange={register('dishType')} placeHolder="dish type" options={List.dishTypeList} />
+        </label>
         <label htmlFor="cuisineType">
           Cuisine type
-          <Dropdown value={cuisineType} onValueChange={(value) => setCuisineType(value)} placeHolder="Cuisine type" options={List.cuisineTypeList} />
+          <Dropdown onValueChange={register('cuisineType')} placeHolder="cuisine type" options={List.cuisineTypeList} />
         </label>
-        <br />
         <label htmlFor="dietType">
           Diet type
-          <Dropdown value={diet} onValueChange={(value) => setDiet(value)} placeHolder="Diet type" options={List.dietList} />
+          <Dropdown onValueChange={register('diet')} placeHolder="diet" options={List.dietList} />
         </label>
-        <br />
         <label htmlFor="mealType">
           Meal type
-          <Dropdown value={mealType} onValueChange={(value) => setMealType(value)} placeHolder="Meal type" options={List.mealTypeList} />
+          <Dropdown onValueChange={register('mealType')} placeHolder="meal type" options={List.mealTypeList} />
         </label>
       </div>
-      <button type="submit">Submit</button>
+      <button type="submit">Searh</button>
     </form>
   );
 }

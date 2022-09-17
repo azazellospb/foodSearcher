@@ -1,32 +1,35 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useAppDispatch } from '../redux/hooks';
+import { signIn } from '../redux/userSlice';
 import UserDataHandlerToLS from '../utils/userDataWriter';
 import styles from './Auth.module.css';
 
-export default function Signin() {
+export function Signin() {
   const [email, setEmail] = useState('');
   const [password, setPass] = useState('');
   const [errorMsg, setMsg] = useState('');
   const navigate = useNavigate();
-
+  const dispatch = useAppDispatch();
   function handleSubmit(event: React.FormEvent) {
     event.preventDefault();
     const user = new UserDataHandlerToLS();
     if (user.verifyLogin(email, password)) {
       setMsg('Вход выполнен успешно!');
       user.setCurrentUser(email);
+      dispatch(signIn({ email }));
       navigate('/');
     } else {
       setMsg('Email или пароль неверны!');
     }
   }
   return (
-    <section>
-      <h2>Войти</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
+    <section className={styles.signin}>
+      <h2 className={styles.signin__title}>Sign in</h2>
+      <form className={styles.signin__form} onSubmit={handleSubmit}>
+        <div className={styles.signin__inputs}>
           <div>
-            <label htmlFor="usermail">
+            <label className={styles.signin__inputBlock} htmlFor="usermail">
               Email
               <input
                 id="usermail"
@@ -38,7 +41,7 @@ export default function Signin() {
             </label>
           </div>
           <div>
-            <label htmlFor="password">
+            <label className={styles.signin__inputBlock} htmlFor="password">
               Password
               <input
                 id="password"
@@ -50,7 +53,7 @@ export default function Signin() {
             </label>
           </div>
         </div>
-        <div>
+        <div className={styles.signin__buttons}>
           <button type="submit" className={styles.btn}>
             Войти
           </button>

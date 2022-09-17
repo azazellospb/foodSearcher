@@ -3,7 +3,7 @@ import { verifyUserData } from '../tools/verifier';
 import UserDataHandlerToLS from '../utils/userDataWriter';
 import styles from './Auth.module.css';
 
-export default function Signup() {
+export function Signup() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPass] = useState('');
@@ -27,6 +27,7 @@ export default function Signup() {
         email,
         name,
         password,
+        history: [],
       };
       user.setUserData(userData);
       SetSignupStatus(false);
@@ -35,30 +36,30 @@ export default function Signup() {
 
   return (signupStatus
     ? (
-      <section>
-        <h2>Регистрация</h2>
-        <form className={styles.signup} onSubmit={handleSubmit}>
+      <section className={styles.signin}>
+        <h2 className={styles.signin__title}>Sign up</h2>
+        <form className={styles.signin__form} onSubmit={handleSubmit}>
           <div>
-            <label htmlFor="username">
+            <label className={styles.signin__inputBlock} htmlFor="username">
               Name
               <input type="text" required id="username" autoComplete="off" value={name} onChange={(event) => { setName(event.target.value); }} />
             </label>
           </div>
           <div>
-            <label htmlFor="useremail">
+            <label className={styles.signin__inputBlock} htmlFor="useremail">
               E-mail
               <input type="text" required autoComplete="off" value={email} onChange={(event) => { setEmail(event.target.value); }} />
             </label>
           </div>
           <div>
-            <label htmlFor="userpassword">
+            <label className={styles.signin__inputBlock} htmlFor="userpassword">
               Password
               <input type="text" required autoComplete="off" value={password} onChange={(event) => { setPass(event.target.value); }} />
             </label>
           </div>
-          <div>
+          <div className={styles.signin__buttons}>
             <button type="submit" className={styles.btn}>
-              Зарегистрироваться
+              Sign up!
             </button>
           </div>
         </form>
@@ -66,12 +67,13 @@ export default function Signup() {
       </section>
     ) : (
       <div className={styles.wrapper_msg}>
-        <p>Вы зарегистрированы.</p>
-        <p>Можете войти в приложение.</p>
+        <p>Registration completed</p>
         <p>
-          <a href="/signin" className={styles.confirm_btn}>
-            Войти
-          </a>
+          you can
+          {' '}
+          <a href="/signin" className={styles.confirm_btn}>login</a>
+          {' '}
+          to the app!
         </p>
       </div>
     )

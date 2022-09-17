@@ -5,9 +5,34 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  margin: 0;
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+#root {
+  min-height: 100vh;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  overflow: hidden;
+}
+
+button {
+  background-color: orangered;
+  color: white;
+  border: 1px solid orangered;
+  border-radius: 3px;
+}
+button:hover {
+  background-color: transparent;
+  color: orangered;
+}
+button:active {
+  transform: scale(0.97);
 }
