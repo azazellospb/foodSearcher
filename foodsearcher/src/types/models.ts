@@ -1,3 +1,5 @@
+import { UseFormRegisterReturn } from "react-hook-form"
+
 export interface UserData {
   name: string,
   email: string,
@@ -17,10 +19,6 @@ export interface QueryParams {
   time?: string,
 }
 
-export interface PropState {
-  searchPath: string;
-}
-
 export interface UserState {
   isOnline: boolean
   user: User,
@@ -31,4 +29,10 @@ interface User {
   favourites: string[],
   history: string[],
   name: string,
+}
+
+export interface DropDownProps {
+  placeHolder: string,
+  options: string[],
+  onValueChange: UseFormRegisterReturn<string>
 }

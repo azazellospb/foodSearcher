@@ -1,12 +1,8 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
-import { UseFormRegisterReturn } from 'react-hook-form';
+import { DropDownProps } from '../types/models';
 
-export default function Dropdown(props: {
-  placeHolder: string,
-  options: string[],
-  onValueChange: UseFormRegisterReturn<string>
-}) {
+export default function Dropdown(props: DropDownProps) {
   const {
     placeHolder,
     options,
