@@ -12,4 +12,7 @@ export default abstract class UserDataHandler {
   abstract getCurrentUser(): { email: string, name: string };
   abstract setHistory(email: string, query: string): void;
   abstract getLastQuery(email: string): string;
+  abstract addToFavorites(email: string, recipeId: string): void;
+  abstract deleteFromFavorites(email: string, recipeId: string): void;
+  abstract getFavorites(email: string): string[];
 }

@@ -43,6 +43,30 @@ export default class UserDataHandlerToLS extends UserDataHandler {
     return userData.history[userData.history.length - 1];
   }
 
+  addToFavorites(email: string, recipeId: string): void {
+    const userData: UserData = JSON.parse(localStorage.getItem(`foodSearcher-${email}`) as string);
+    if (userData.favorites) {
+      userData.favorites.push(recipeId);
+    } else {
+      userData.favorites = [];
+      userData.favorites.push(recipeId);
+    }
+    localStorage.setItem(`foodSearcher-${email}`, JSON.stringify(userData));
+  }
+
+  getFavorites(email: string): string[] {
+    const userData: UserData = JSON.parse(localStorage.getItem(`foodSearcher-${email}`) as string);
+    return userData.favorites;
+  }
+
+  deleteFromFavorites(email: string, recipeId: string): void {
+    const userData: UserData = JSON.parse(localStorage.getItem(`foodSearcher-${email}`) as string);
+    if (userData.favorites) {
+      userData.favorites = userData.favorites.filter((recipe) => recipe !== recipeId);
+    }
+    localStorage.setItem(`foodSearcher-${email}`, JSON.stringify(userData));
+  }
+
   getCurrentUser() {
     if (localStorage.getItem('currentUser')) {
       return JSON.parse(localStorage.getItem('currentUser') || '');
