@@ -6,12 +6,13 @@ export default function Dropdown(props: DropDownProps) {
   const {
     placeHolder,
     options,
-    onValueChange,
+    formRegister,
   } = props;
+
   return (
     <select
       placeholder={placeHolder}
-      {...onValueChange}
+      {...formRegister}
     >
       <option value="" disabled>{`Select ${placeHolder}`}</option>
       {

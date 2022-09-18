@@ -46,19 +46,19 @@ export default function SearchForm() {
         </div>
         <label htmlFor="dishType">
           Dish type
-          <Dropdown onValueChange={register('dishType')} placeHolder="dish type" options={List.dishTypeList} />
+          <Dropdown formRegister={register('dishType')} placeHolder="dish type" options={List.dishTypeList} />
         </label>
         <label htmlFor="cuisineType">
           Cuisine type
-          <Dropdown onValueChange={register('cuisineType')} placeHolder="cuisine type" options={List.cuisineTypeList} />
+          <Dropdown formRegister={register('cuisineType')} placeHolder="cuisine type" options={List.cuisineTypeList} />
         </label>
         <label htmlFor="dietType">
           Diet type
-          <Dropdown onValueChange={register('diet')} placeHolder="diet" options={List.dietList} />
+          <Dropdown formRegister={register('diet')} placeHolder="diet" options={List.dietList} />
         </label>
         <label htmlFor="mealType">
           Meal type
-          <Dropdown onValueChange={register('mealType')} placeHolder="meal type" options={List.mealTypeList} />
+          <Dropdown formRegister={register('mealType')} placeHolder="meal type" options={List.mealTypeList} />
         </label>
       </div>
       <button type="submit">Searh</button>

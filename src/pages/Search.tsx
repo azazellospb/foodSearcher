@@ -10,9 +10,12 @@ import styles from './Search.module.css';
 
 export function Search() {
   const dispatch = useAppDispatch();
+
   const user = new UserDataHandlerToLS();
   const { email } = user.getCurrentUser();
+
   const historyArr = useAppSelector((state) => state.userReducer.user.history);
+
   let lastUserPage = historyArr[historyArr.length - 1];
   if (lastUserPage) {
     user.setHistory(email, lastUserPage);
@@ -27,7 +30,8 @@ export function Search() {
     setSearchParams(obj);
   }, [lastUserPage, setSearchParams]);
 
-  const [currentPage, SetCurrentPage] = useState('');
+  const [currentPage, setCurrentPage] = useState('');
+
   let query = lastUserPage;
   if (currentPage && (currentPage !== lastUserPage)) {
     query = currentPage;
@@ -43,10 +47,10 @@ export function Search() {
     const nextPageQuery = `&${nextPageLink.split('?')[1].replace('&type=public', '')}`;
     user.setHistory(email, nextPageQuery);
     dispatch(addHistory(nextPageQuery));
-    SetCurrentPage(nextPageQuery);
+    setCurrentPage(nextPageQuery);
   };
 
-  const handleToStartClick = () => SetCurrentPage(lastUserPage);
+  const handleToStartClick = () => setCurrentPage(lastUserPage);
 
   if (results.count) {
     return (
@@ -59,7 +63,12 @@ export function Search() {
           </div>
         </section>
         <section className={styles.results}>
-          {results.hits.map((item) => <RecipeCard key={Math.random()} item={item} />)}
+          {
+            results.hits
+              .map(
+                (item, index) => <RecipeCard key={results.hits[index].recipe.image} item={item} />,
+              )
+          }
         </section>
       </>
     );
