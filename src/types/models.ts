@@ -35,5 +35,5 @@ interface User {
 export interface DropDownProps {
   placeHolder: string,
   options: string[],
-  onValueChange: UseFormRegisterReturn<string>
+  formRegister: UseFormRegisterReturn<string>
 }

@@ -38,10 +38,11 @@ export function Recipe() {
       cuisineType,
       digest,
     } = recipe;
-    const fatRate = !Number.isNaN(digest[0].total / digest[0].daily) ? (digest[0].total / digest[0].daily).toFixed(2) : ' - ';
-    const chardsRate = !Number.isNaN(digest[1].total / digest[1].daily) ? (digest[1].total / digest[1].daily).toFixed(2) : ' - ';
-    const proteinRate = !Number.isNaN(digest[2].total / digest[2].daily) ? (digest[2].total / digest[2].daily).toFixed(2) : ' - ';
-    const cholesterolRate = !Number.isNaN(digest[3].total / digest[3].daily) ? (digest[3].total / digest[3].daily).toFixed(2) : ' - ';
+    const getRate = (i:number) => (!Number.isNaN(digest[i].total / digest[i].daily) ? (digest[i].total / digest[i].daily).toFixed(2) : ' - ');
+    const fatRate = getRate(0);
+    const chardsRate = getRate(1);
+    const proteinRate = getRate(2);
+    const cholesterolRate = getRate(3);
     const servings = recipe.yield;
     const toggleFavorStat = () => {
       if (!favourStatus) {
