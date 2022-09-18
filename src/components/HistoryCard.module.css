@@ -1,0 +1,14 @@
+.searchQueryBlock {
+  width: 70%;
+  border: 1px solid rgb(209, 81, 81);
+  border-radius: 5px;
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  align-items: center;
+}
+.buttonBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}

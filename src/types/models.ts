@@ -8,6 +8,9 @@ export interface UserData {
   history: string[]
 }
 
+export interface QueryToObject {
+  [key:string]: string
+}
 export interface QueryParams {
   dishType?: string,
   calories?: string,

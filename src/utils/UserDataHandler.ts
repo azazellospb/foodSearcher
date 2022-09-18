@@ -11,5 +11,6 @@ export default abstract class UserDataHandler {
   abstract setCurrentUser(email: string): void;
   abstract getCurrentUser(): { email: string, name: string };
   abstract setHistory(email: string, query: string): void;
+  abstract getHistory(email: string): string[];
   abstract getLastQuery(email: string): string;
 }

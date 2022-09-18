@@ -41,7 +41,19 @@ export default function SearchForm() {
         <div>
           <label htmlFor="dishtype">
             Type key word:
-            <input type="input" {...register('q')} autoComplete="off" placeholder="Type your recipe here" />
+            <input
+              type="input"
+              {...register('q', {
+                required: true,
+                minLength: {
+                  value: 3,
+                  message: '3 letters minimum',
+                },
+                setValueAs: (v) => v.toLowerCase(),
+              })}
+              autoComplete="off"
+              placeholder="3 letters minimum"
+            />
           </label>
         </div>
         <label htmlFor="dishType">
