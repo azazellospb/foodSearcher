@@ -1,0 +1,46 @@
+{
+  "env": {
+    "browser": true,
+    "es2021": true
+  },
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:@typescript-eslint/recommended",
+    "airbnb",
+    "airbnb/hooks",
+    "airbnb-typescript"
+  ],
+  "overrides": [
+    {
+      "files": [
+          "**/*.spec.js",
+          "**/*.spec.jsx",
+          "**/*.test.jsx",
+          "**/*.test.js"
+      ],
+      "env": {
+          "jest": true
+      }
+    }
+  ],
+  "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+        "ecmaFeatures": {
+            "jsx": true
+        },
+        "ecmaVersion": "latest",
+        "sourceType": "module",
+        "project": ["./**/tsconfig.json"]
+    },
+  "plugins": [
+    "react",
+    "@typescript-eslint"
+  ],
+  "rules": {
+    "@typescript-eslint/semi": ["error", "always"],
+    "linebreak-style": ["error", "windows"],
+    "import/prefer-default-export": "off",
+    "no-underscore-dangle": "off"
+  }
+}
