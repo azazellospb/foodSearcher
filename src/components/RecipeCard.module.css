@@ -2,7 +2,14 @@
   border: 2px dotted orangered;
   background-color: antiquewhite;
   border-radius: 5px;
+  max-width: 250px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 .card > img {
   width: 100%;
+}
+.card > * {
+  margin: 0;
 }

@@ -1,17 +1,47 @@
 import { UserData } from '../types/models';
 
 export default abstract class UserDataHandler {
-  abstract setUserData(data: UserData): void;
-  abstract getName(email: string): string;
-  // abstract setOnlineStatus(email: string): void;
-  // abstract setOfflineStatus(email: string): void;
-  // abstract getStatus(email: string): string;
-  abstract hasSuchUser(email:string): boolean;
-  abstract verifyLogin(email: string, password: string): boolean;
-  abstract setCurrentUser(email: string): void;
-  abstract getCurrentUser(): { email: string, name: string };
-  abstract setHistory(email: string, query: string): void;
-  abstract getHistory(email: string): string[];
-  abstract removeFromHistory(email: string, query: string): void;
-  abstract getLastQuery(email: string): string;
+  static setUserData(data: UserData): void {
+    throw new Error(`Method ${this.name} with data: ${data} should be implemented!`);
+  }
+
+  static getName(email: string): string {
+    throw new Error(`Method ${this.name} with data: ${email} should be implemented!`);
+  }
+
+  static hasSuchUser(email: string): boolean {
+    throw new Error(`Method ${this.name} with data: ${email} should be implemented!`);
+  }
+
+  static verifyLogin(email: string, password: string): boolean {
+    throw new Error(`Method ${this.name} with data: ${email}, ${password}  should be implemented!`);
+  }
+
+  static setCurrentUser(email: string): void {
+    throw new Error(`Method ${this.name} with data: ${email} should be implemented!`);
+  }
+
+  static getCurrentUser(): string {
+    throw new Error(`Method ${this.name}`);
+  }
+
+  static setHistory(email: string, query: string): void {
+    throw new Error(`Method ${this.name} with data: ${email}, ${query}  should be implemented!`);
+  }
+
+  static getLastQuery(email:string): string {
+    throw new Error(`Method ${this.name} with data: ${email} should be implemented!`);
+  }
+
+  static addToFavorites(email: string, recipeId: string): void {
+    throw new Error(`Method ${this.name} with data: ${email}, ${recipeId}  should be implemented!`);
+  }
+
+  static deleteFromFavorites(email: string, recipeId: string): void {
+    throw new Error(`Method ${this.name} with data: ${email}, ${recipeId}  should be implemented!`);
+  }
+
+  static getFavorites(email: string): string[] {
+    throw new Error(`Method ${this.name} with data: ${email} should be implemented!`);
+  }
 }

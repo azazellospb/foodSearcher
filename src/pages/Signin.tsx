@@ -13,10 +13,9 @@ export function Signin() {
   const dispatch = useAppDispatch();
   function handleSubmit(event: React.FormEvent) {
     event.preventDefault();
-    const user = new UserDataHandlerToLS();
-    if (user.verifyLogin(email, password)) {
+    if (UserDataHandlerToLS.verifyLogin(email, password)) {
       setMsg('Вход выполнен успешно!');
-      user.setCurrentUser(email);
+      UserDataHandlerToLS.setCurrentUser(email);
       dispatch(signIn({ email }));
       navigate('/');
     } else {

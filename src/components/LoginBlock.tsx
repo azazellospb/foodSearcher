@@ -5,8 +5,7 @@ import styles from './LoginBlock.module.css';
 
 export default function LoginBlock() {
   const navigate = useNavigate();
-  const user = new UserDataHandlerToLS();
-  const { name } = user.getCurrentUser();
+  const { name } = UserDataHandlerToLS.getCurrentUser();
   const logOut = () => {
     localStorage.removeItem('currentUser');
     navigate('/');
