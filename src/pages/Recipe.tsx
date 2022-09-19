@@ -10,14 +10,13 @@ import styles from './Recipe.module.css';
 export function Recipe() {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const user = new UserDataHandlerToLS();
-  const { email } = user.getCurrentUser();
+  const { email } = UserDataHandlerToLS.getCurrentUser();
   const recipeQuery = sessionStorage.getItem('recipe') || '';
   const {
     data = { recipe: '' },
   } = useGetRecipeByIdQuery(recipeQuery);
   const recipeData = data as Hit;
-  const isFavorite = user.getFavorites(email).indexOf(recipeQuery) !== -1;
+  const isFavorite = UserDataHandlerToLS.getFavorites(email).indexOf(recipeQuery) !== -1;
   const [favourStatus, SetFavourStatus] = useState(isFavorite);
   const [, setSearchParams] = useSearchParams();
   useEffect(() => {
@@ -47,10 +46,10 @@ export function Recipe() {
     const toggleFavorStat = () => {
       if (!favourStatus) {
         dispatch(addFavorite(recipeQuery));
-        user.addToFavorites(email, recipeQuery);
+        UserDataHandlerToLS.addToFavorites(email, recipeQuery);
       } else {
         dispatch(removeFavourite(recipeQuery));
-        user.deleteFromFavorites(email, recipeQuery);
+        UserDataHandlerToLS.deleteFromFavorites(email, recipeQuery);
       }
       SetFavourStatus(!favourStatus);
     };

@@ -11,16 +11,15 @@ import styles from './Search.module.css';
 export function Search() {
   const dispatch = useAppDispatch();
 
-  const user = new UserDataHandlerToLS();
-  const { email } = user.getCurrentUser();
+  const { email } = UserDataHandlerToLS.getCurrentUser();
 
   const historyArr = useAppSelector((state) => state.userReducer.user.history);
 
   let lastUserPage = historyArr[historyArr.length - 1];
   if (lastUserPage) {
-    user.setHistory(email, lastUserPage);
+    UserDataHandlerToLS.setHistory(email, lastUserPage);
   } else {
-    lastUserPage = user.getLastQuery(email);
+    lastUserPage = UserDataHandlerToLS.getLastQuery(email);
   }
 
   const [, setSearchParams] = useSearchParams();
@@ -45,7 +44,7 @@ export function Search() {
   const handleNextPageClick = () => {
     const nextPageLink = results._links.next.href;
     const nextPageQuery = `&${nextPageLink.split('?')[1].replace('&type=public', '')}`;
-    user.setHistory(email, nextPageQuery);
+    UserDataHandlerToLS.setHistory(email, nextPageQuery);
     dispatch(addHistory(nextPageQuery));
     setCurrentPage(nextPageQuery);
   };

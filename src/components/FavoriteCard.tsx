@@ -10,15 +10,14 @@ import styles from './RecipeCard.module.css';
 
 export default function FavoriteCard(props: {
   recipeId: string,
-  callback: (parentState: string) => void,
+  refreshParent: (parentState: string) => void,
 }) {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const { recipeId, callback } = props;
+  const { recipeId, refreshParent } = props;
 
-  const user = new UserDataHandlerToLS();
-  const { email } = user.getCurrentUser();
-  const isFavorite = user.getFavorites(email).indexOf(recipeId) !== -1;
+  const { email } = UserDataHandlerToLS.getCurrentUser();
+  const isFavorite = UserDataHandlerToLS.getFavorites(email).indexOf(recipeId) !== -1;
 
   const {
     data = { recipe: '' },
@@ -43,11 +42,11 @@ export default function FavoriteCard(props: {
     const toggleFavorStat = () => {
       if (!isFavorite) {
         dispatch(addFavorite(recipeId));
-        user.addToFavorites(email, recipeId);
+        UserDataHandlerToLS.addToFavorites(email, recipeId);
       } else {
         dispatch(removeFavourite(recipeId));
-        user.deleteFromFavorites(email, recipeId);
-        callback(recipeId);
+        UserDataHandlerToLS.deleteFromFavorites(email, recipeId);
+        refreshParent(recipeId);
       }
     };
     return (

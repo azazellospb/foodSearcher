@@ -12,9 +12,8 @@ export function Signup() {
 
   function handleSubmit(event: React.FormEvent) {
     event.preventDefault();
-    const user = new UserDataHandlerToLS();
     const userDataCheck = verifyUserData(password, name, email);
-    const doesUserExist = user.hasSuchUser(email);
+    const doesUserExist = UserDataHandlerToLS.hasSuchUser(email);
     if (doesUserExist) {
       setMsg('Such user already exist.');
     } else if (!userDataCheck) {
@@ -30,7 +29,7 @@ export function Signup() {
         history: [],
         favorites: [],
       };
-      user.setUserData(userData);
+      UserDataHandlerToLS.setUserData(userData);
       SetSignupStatus(false);
     }
   }
