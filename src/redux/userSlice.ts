@@ -29,7 +29,7 @@ const userSlice = createSlice({
         name: '',
       };
     },
-    addFavourite(state, action) {
+    addFavorite(state, action) {
       state.user.favourites.push(action.payload);
     },
 
@@ -50,7 +50,7 @@ const userSlice = createSlice({
 export const {
   signIn,
   signOut,
-  addFavourite,
+  addFavorite,
   removeFavourite,
   addHistory,
   removeHistory,

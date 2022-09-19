@@ -5,7 +5,8 @@ export interface UserData {
   email: string,
   password: string,
   status?: string,
-  history: string[]
+  history: string[],
+  favorites: string[],
 }
 
 export interface QueryParams {
