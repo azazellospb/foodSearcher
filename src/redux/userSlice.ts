@@ -18,7 +18,7 @@ const userSlice = createSlice({
   reducers: {
     signIn: (state, action) => {
       state.isOnline = true;
-      state.user = action.payload;
+      state.user.email = action.payload;
     },
     signOut: (state) => {
       state.isOnline = false;
