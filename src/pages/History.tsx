@@ -5,10 +5,9 @@ import UserDataHandlerToLS from '../utils/userDataWriter';
 import styles from './History.module.css';
 
 export function History() {
-  const user = new UserDataHandlerToLS();
-  const { email } = user.getCurrentUser();
+  const { email } = UserDataHandlerToLS.getCurrentUser();
   const [, setState] = useState('');
-  const userHistory = Array.from(new Set(user.getHistory(email)));
+  const userHistory = Array.from(new Set(UserDataHandlerToLS.getHistory(email)));
   if (userHistory.length !== 0) {
     return (
       <div className={styles.historyBlock}>

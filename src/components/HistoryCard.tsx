@@ -14,8 +14,7 @@ export default function HistoryCard(props: {
 }) {
   const { item, refreshParent } = props;
 
-  const user = new UserDataHandlerToLS();
-  const { email } = user.getCurrentUser();
+  const { email } = UserDataHandlerToLS.getCurrentUser();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
@@ -31,7 +30,7 @@ export default function HistoryCard(props: {
     navigate('/search');
   };
   const handleDelete = () => {
-    user.removeFromHistory(email, item);
+    UserDataHandlerToLS.removeFromHistory(email, item);
     refreshParent(item);
   };
   return (

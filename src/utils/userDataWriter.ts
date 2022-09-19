@@ -43,12 +43,12 @@ export default class UserDataHandlerToLS extends UserDataHandler {
     localStorage.setItem(`foodSearcher-${email}`, JSON.stringify(userData));
   }
 
-  getHistory(email: string): string[] {
+  static getHistory(email: string): string[] {
     const userData: UserData = JSON.parse(localStorage.getItem(`foodSearcher-${email}`) as string);
     return userData.history;
   }
 
-  removeFromHistory(email: string, query: string): void {
+  static removeFromHistory(email: string, query: string): void {
     const userData: UserData = JSON.parse(localStorage.getItem(`foodSearcher-${email}`) as string);
     userData.history = userData.history.filter((item) => item !== query);
     localStorage.setItem(`foodSearcher-${email}`, JSON.stringify(userData));
