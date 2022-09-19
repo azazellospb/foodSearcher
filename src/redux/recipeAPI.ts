@@ -6,7 +6,7 @@ export const recipeAPI = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: 'https://api.edamam.com/api/recipes/v2' }),
   endpoints: (builder) => ({
     getRecipeById: builder.query<Hit, string>({
-      query: (recipeId) => `/${recipeId}`,
+      query: (recipeId) => `/${recipeId}?`,
     }),
     getRecipesByParams: builder.query<SearchResult, string>({
       query: (searchQuery) => `?type=public${searchQuery}`,

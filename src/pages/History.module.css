@@ -1,7 +1,9 @@
 .historyBlock {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-around;
+  justify-content: flex-start;
   gap: 20px;
   margin: 10px;
+  flex-direction: column;
+  align-items: center;
 }

@@ -6,7 +6,7 @@ export function objMaker(queryPath: string):[string[], string[]] {
   const object: QueryToObject = {};
   const queryPairs = queryPath.split('&');
   queryPairs.shift();
-  queryPairs.filter((pair) => !pair.includes('_')).map((item) => {
+  queryPairs.map((item) => {
     const keyValArr = item.split('=');
     object[keyValArr[0]] = keyValArr[1];
     return item;

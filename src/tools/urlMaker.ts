@@ -14,6 +14,6 @@ export function makeUrl(queryPath: QueryParams | string) {
       }
     });
     return url.slice(0, -1);
-  }
-  return `${queryPath}?app_key=cccfb4464ba349b4557a6013a27109bf&app_id=e7de9a05`;
+  } if (queryPath.includes('&')) return `${queryPath}&app_key=cccfb4464ba349b4557a6013a27109bf&app_id=e7de9a05`;
+  return `${queryPath}app_key=cccfb4464ba349b4557a6013a27109bf&app_id=e7de9a05`;
 }

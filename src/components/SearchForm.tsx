@@ -27,9 +27,9 @@ export default function SearchForm() {
   });
   function onSubmit(obj: QueryParams) {
     const newObj = { ...obj };
-    navigate('/search');
     const query = makeUrl(newObj as QueryParams);
     dispatch(addHistory(query));
+    navigate('/search');
   }
   return (
     <form
@@ -39,7 +39,7 @@ export default function SearchForm() {
       Please set up search parameters
       <div>
         <div>
-          <label htmlFor="dishtype">
+          <label className={styles.label} htmlFor="dishtype">
             Type key word:
             <input
               type="input"
@@ -56,19 +56,19 @@ export default function SearchForm() {
             />
           </label>
         </div>
-        <label htmlFor="dishType">
+        <label className={styles.label} htmlFor="dishType">
           Dish type
           <Dropdown formRegister={register('dishType')} placeHolder="dish type" options={List.dishTypeList} />
         </label>
-        <label htmlFor="cuisineType">
+        <label className={styles.label} htmlFor="cuisineType">
           Cuisine type
           <Dropdown formRegister={register('cuisineType')} placeHolder="cuisine type" options={List.cuisineTypeList} />
         </label>
-        <label htmlFor="dietType">
+        <label className={styles.label} htmlFor="dietType">
           Diet type
           <Dropdown formRegister={register('diet')} placeHolder="diet" options={List.dietList} />
         </label>
-        <label htmlFor="mealType">
+        <label className={styles.label} htmlFor="mealType">
           Meal type
           <Dropdown formRegister={register('mealType')} placeHolder="meal type" options={List.mealTypeList} />
         </label>

@@ -1,10 +1,24 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useAppDispatch } from '../redux/hooks';
+import { addHistory } from '../redux/userSlice';
 import { objMaker } from '../tools/objMaker';
+import { makeUrl } from '../tools/urlMaker';
+import UserDataHandlerToLS from '../utils/userDataWriter';
 import styles from './HistoryCard.module.css';
 
-export default function HistoryCard(props: { item: string }) {
-  const { item } = props;
+export default function HistoryCard(props: {
+  item: string,
+  refreshParent: (parentState: string) => void,
+}) {
+  const { item, refreshParent } = props;
+
+  const user = new UserDataHandlerToLS();
+  const { email } = user.getCurrentUser();
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+
   const [keyArr, valArr] = objMaker(item);
   const keyHandler = (key: string) => {
     if (key === 'q') return 'Your search';
@@ -12,12 +26,14 @@ export default function HistoryCard(props: { item: string }) {
     return key;
   };
   const handleSearch = () => {
-    console.log('!');
+    const query = makeUrl(item);
+    dispatch(addHistory(query));
+    navigate('/search');
   };
   const handleDelete = () => {
-    console.log('!');
+    user.removeFromHistory(email, item);
+    refreshParent(item);
   };
-
   return (
     <div className={styles.searchQueryBlock}>
       <div>

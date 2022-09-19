@@ -33,13 +33,25 @@ export default class UserDataHandlerToLS extends UserDataHandler {
   setHistory(email: string, query: string): void {
     const userData: UserData = JSON.parse(localStorage.getItem(`foodSearcher-${email}`) as string);
     if (!userData.history) userData.history = [];
-    if (userData.history[userData.history.length - 1] !== query) userData.history.push(query);
+    const cleanQuery = query.split('%20').join(' ').split('&').filter((pair) => !pair.includes('_'))
+      .join('&');
+    if (!userData.history.includes(cleanQuery)) userData.history.push(cleanQuery);
+    else {
+      userData.history = userData.history.filter((item) => item !== cleanQuery);
+      userData.history.push(cleanQuery);
+    }
     localStorage.setItem(`foodSearcher-${email}`, JSON.stringify(userData));
   }
 
   getHistory(email: string): string[] {
     const userData: UserData = JSON.parse(localStorage.getItem(`foodSearcher-${email}`) as string);
     return userData.history;
+  }
+
+  removeFromHistory(email: string, query: string): void {
+    const userData: UserData = JSON.parse(localStorage.getItem(`foodSearcher-${email}`) as string);
+    userData.history = userData.history.filter((item) => item !== query);
+    localStorage.setItem(`foodSearcher-${email}`, JSON.stringify(userData));
   }
 
   getLastQuery(email:string): string {

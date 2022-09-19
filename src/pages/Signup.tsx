@@ -28,6 +28,7 @@ export function Signup() {
         name,
         password,
         history: [],
+        favorites: [],
       };
       user.setUserData(userData);
       SetSignupStatus(false);
