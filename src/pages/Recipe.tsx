@@ -67,7 +67,7 @@ export function Recipe() {
               <span>{`Cuisine type: ${cuisineType}. `}</span>
               <span>{`Meal type: ${mealType}. `}</span>
               Ingredients:
-              {ingredientLines.map((ingredient) => <div>{ingredient}</div>)}
+              {ingredientLines.map((ingredient) => <div key={ingredient}>{ingredient}</div>)}
               <button type="button" id={recipeQuery} onClick={toggleFavorStat}>
                 {!favourStatus && ('Add to favorites')}
                 {favourStatus && ('Remove from favorites')}
@@ -84,7 +84,7 @@ export function Recipe() {
             </div>
             <div>
               Diets:
-              {dietLabels.map((diet) => <div>{diet}</div>)}
+              {dietLabels.map((diet) => <div key={diet}>{diet}</div>)}
             </div>
           </div>
         </div>
