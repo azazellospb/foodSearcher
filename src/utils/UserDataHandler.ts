@@ -44,4 +44,12 @@ export default abstract class UserDataHandler {
   static getFavorites(email: string): string[] {
     throw new Error(`Method ${this.name} with data: ${email} should be implemented!`);
   }
+
+  static getHistory(email: string): string[] {
+    throw new Error(`Method ${this.name} with data: ${email} should be implemented!`);
+  }
+
+  static removeFromHistory(email: string, query: string): void {
+    throw new Error(`Method ${this.name} with data: ${email}, ${query}  should be implemented!`);
+  }
 }

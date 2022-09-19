@@ -9,6 +9,9 @@ export interface UserData {
   favorites: string[],
 }
 
+export interface QueryToObject {
+  [key:string]: string
+}
 export interface QueryParams {
   dishType?: string,
   calories?: string,
