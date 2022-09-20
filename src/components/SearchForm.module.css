@@ -22,3 +22,24 @@
   justify-content: space-between;
   width: 100%;
 }
+
+.suggestBlock {
+  position: absolute;
+  width:  30vw;
+  height: 110px;
+  background: white;
+  transform: translate(130px, 20px);
+  border: 1px solid black;
+}
+
+.suggestBlock > option {
+  white-space: nowrap;
+  width: 100%;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.suggestBlock > option:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}

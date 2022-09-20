@@ -14,8 +14,8 @@ export function Search() {
   const { email } = UserDataHandlerToLS.getCurrentUser();
 
   const historyArr = useAppSelector((state) => state.userReducer.user.history);
-
   let lastUserPage = historyArr[historyArr.length - 1];
+  const startPage = lastUserPage.split('&').filter((x) => !x.includes('_cont')).join('&');
   if (lastUserPage) {
     UserDataHandlerToLS.setHistory(email, lastUserPage);
   } else {
@@ -49,7 +49,7 @@ export function Search() {
     setCurrentPage(nextPageQuery);
   };
 
-  const handleToStartClick = () => setCurrentPage(lastUserPage);
+  const handleToStartClick = () => setCurrentPage(startPage);
 
   if (results.count) {
     return (
