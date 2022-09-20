@@ -1,3 +1,4 @@
+import { ErrorInfo, ReactNode } from 'react';
 import { UseFormRegisterReturn } from 'react-hook-form';
 
 export interface UserData {
@@ -39,4 +40,14 @@ export interface DropDownProps {
   placeHolder: string,
   options: string[],
   formRegister: UseFormRegisterReturn<string>
+}
+
+export interface ErrorBoundaryProps {
+  children?: ReactNode;
+}
+
+export interface ErrorBoundaryState {
+  hasError: boolean;
+  error?: Error,
+  errorInfo?: ErrorInfo;
 }
