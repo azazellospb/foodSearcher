@@ -27,7 +27,8 @@ export function Search() {
   useEffect(() => {
     const obj = new URLSearchParams(lastUserPage);
     setSearchParams(obj);
-  }, [lastUserPage, setSearchParams]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [lastUserPage]);
 
   const [currentPage, setCurrentPage] = useState('');
 
@@ -56,10 +57,12 @@ export function Search() {
       <>
         <section className={styles.header}>
           <span>{`Total results: ${results.count}`}</span>
-          <div className={styles.controls}>
-            <button type="button" onClick={handleToStartClick}>Back to first page</button>
-            <button type="button" onClick={handleNextPageClick}>Next page</button>
-          </div>
+          {(results.count > 20) && (
+            <div className={styles.controls}>
+              <button type="button" onClick={handleToStartClick}>Back to first page</button>
+              <button type="button" onClick={handleNextPageClick}>Next page</button>
+            </div>
+          )}
         </section>
         <section className={styles.results}>
           {
