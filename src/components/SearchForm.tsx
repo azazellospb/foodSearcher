@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable prefer-const */
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import styles from './SearchForm.module.css';
@@ -11,12 +11,17 @@ import { QueryParams } from '../types/models';
 import { makeUrl } from '../tools/urlMaker';
 import { useAppDispatch } from '../redux/hooks';
 import { addHistory } from '../redux/userSlice';
+import { useGetSuggestsQuery } from '../redux/recipeAPI';
+import { debounce } from '../tools/debouncer';
 
 export default function SearchForm() {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-  const { register, handleSubmit } = useForm<QueryParams>({
+  const [queryVal, setQueryVal] = useState('');
+  const [suggests, setSuggests] = useState(['']);
+  const [displaySuggests, setDisplaySuggests] = useState(false);
+  const { register, handleSubmit, getValues } = useForm<QueryParams>({
     defaultValues: {
       q: searchParams.get('q') ?? '',
       cuisineType: searchParams.get('cuisineType') ?? '',
@@ -25,12 +30,36 @@ export default function SearchForm() {
       mealType: searchParams.get('mealType') ?? '',
     },
   });
+  const { data = [] } = useGetSuggestsQuery(makeUrl(`&q=${queryVal}`));
+
+  useEffect(() => {
+    setSuggests(data);
+    setDisplaySuggests(true);
+    if (data.length === 0) setDisplaySuggests(false);
+  }, [data]);
+
   function onSubmit(obj: QueryParams) {
     const newObj = { ...obj };
     const query = makeUrl(newObj as QueryParams);
+
     dispatch(addHistory(query));
     navigate('/search');
   }
+
+  const makeSuggestSearch = (
+    e: React.MouseEvent<HTMLOptionElement, MouseEvent>,
+  ) => {
+    const option = e.target as HTMLOptionElement;
+    const optionText = option.innerHTML;
+    const query = makeUrl(`&q=${optionText}`);
+    dispatch(addHistory(query));
+    navigate('/search');
+  };
+
+  const handleInput = () => {
+    setQueryVal(getValues('q') || '');
+  };
+
   return (
     <form
       className={styles.form}
@@ -53,7 +82,15 @@ export default function SearchForm() {
               })}
               autoComplete="off"
               placeholder="3 letters minimum"
+              onInput={debounce(handleInput, 2000)}
+              onClick={() => setDisplaySuggests(false)}
             />
+            {displaySuggests && (
+              <div className={styles.suggestBlock}>
+                {suggests
+                  .map((item) => <option onClick={makeSuggestSearch} key={item}>{item}</option>)}
+              </div>
+            )}
           </label>
         </div>
         <label className={styles.label} htmlFor="dishType">
