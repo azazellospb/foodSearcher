@@ -9,7 +9,7 @@ import { Hit } from '../types/responceTypes';
 import UserDataHandlerToLS from '../utils/userDataWriter';
 import styles from './Recipe.module.css';
 
-export function Recipe() {
+export default function Recipe() {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { email } = UserDataHandlerToLS.getCurrentUser();

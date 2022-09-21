@@ -10,7 +10,7 @@ import { SearchResult } from '../types/responceTypes';
 import UserDataHandlerToLS from '../utils/userDataWriter';
 import styles from './Search.module.css';
 
-export function Search() {
+export default function Search() {
   const dispatch = useAppDispatch();
 
   const { email } = UserDataHandlerToLS.getCurrentUser();
