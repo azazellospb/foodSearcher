@@ -1,3 +1,5 @@
+/* eslint-disable no-nested-ternary */
+import { SerializedError } from '@reduxjs/toolkit';
 import React, { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import RecipeCard from '../components/RecipeCard';
@@ -8,7 +10,7 @@ import { SearchResult } from '../types/responceTypes';
 import UserDataHandlerToLS from '../utils/userDataWriter';
 import styles from './Search.module.css';
 
-export function Search() {
+export default function Search() {
   const dispatch = useAppDispatch();
 
   const { email } = UserDataHandlerToLS.getCurrentUser();
@@ -38,8 +40,10 @@ export function Search() {
   }
 
   const {
-    data = [],
+    isLoading,
   } = useGetRecipesByParamsQuery(query);
+  const error = useGetRecipesByParamsQuery(query).error as SerializedError;
+  const data = useGetRecipesByParamsQuery(query).data as SearchResult || [];
   const results = data as SearchResult;
 
   const handleNextPageClick = () => {
@@ -51,30 +55,36 @@ export function Search() {
   };
 
   const handleToStartClick = () => setCurrentPage(startPage);
-
-  if (results.count) {
-    return (
-      <>
-        <section className={styles.header}>
-          <span>{`Total results: ${results.count}`}</span>
-          {(results.count > 20) && (
-            <div className={styles.controls}>
-              <button type="button" onClick={handleToStartClick}>Back to first page</button>
-              <button type="button" onClick={handleNextPageClick}>Next page</button>
-            </div>
-          )}
-        </section>
-        <section className={styles.results}>
-          {
-            results.hits
-              .map(
-                (item, index) => <RecipeCard key={results.hits[index].recipe.image} item={item} />,
-              )
-          }
-        </section>
-      </>
-    );
-  } return (
-    <p>Loading...</p>
+  return (
+    <div>
+      { isLoading ? (
+        <span>Loading...</span>
+      ) : error ? (
+        <b>
+          {'There\'s an error:'}
+          {error.message}
+        </b>
+      ) : data ? (
+        <>
+          <section className={styles.header}>
+            <span>{`Total results: ${results.count}`}</span>
+            {(results.count > 20) && (
+              <div className={styles.controls}>
+                <button type="button" onClick={handleToStartClick}>Back to first page</button>
+                <button type="button" onClick={handleNextPageClick}>Next page</button>
+              </div>
+            )}
+          </section>
+          <section className={styles.results}>
+            {
+              results.hits
+                .map(
+                  (item, i) => <RecipeCard key={results.hits[i].recipe.image} item={item} />,
+                )
+            }
+          </section>
+        </>
+      ) : null}
+    </div>
   );
 }
