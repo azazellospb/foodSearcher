@@ -3,8 +3,9 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Hit } from '../types/responceTypes';
 import styles from './RecipeCard.module.css';
+import { HitPropType } from '../types/propTypes';
 
-export default function RecipeCard(props: { item: Hit }) {
+function RecipeCard(props: { item: Hit }) {
   const navigate = useNavigate();
   const { item } = props;
   const {
@@ -34,3 +35,9 @@ export default function RecipeCard(props: { item: Hit }) {
     </div>
   );
 }
+
+RecipeCard.propTypes = {
+  item: HitPropType.isRequired,
+};
+
+export default RecipeCard;
