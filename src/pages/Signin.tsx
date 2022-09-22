@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { UserAppContext } from '../context/userContext';
 import { useAppDispatch } from '../redux/hooks';
 import { signIn } from '../redux/userSlice';
+import { UserContext } from '../types/models';
 import UserDataHandlerToLS from '../utils/userDataWriter';
 import styles from './Auth.module.css';
 
@@ -11,10 +13,13 @@ export function Signin() {
   const [userLoginMsg, setUserLoginMsg] = useState('');
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const { setFavorites } = useContext(UserAppContext) as UserContext;
   function handleSubmit(event: React.FormEvent) {
     event.preventDefault();
     if (UserDataHandlerToLS.verifyLogin(email, password)) {
+      const favNumber = UserDataHandlerToLS.getFavorites(email).length;
       setUserLoginMsg('Вход выполнен успешно!');
+      setFavorites(favNumber);
       dispatch(signIn({ email }));
       navigate('/');
     } else {
