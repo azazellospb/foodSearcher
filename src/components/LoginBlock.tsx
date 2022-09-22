@@ -1,18 +1,18 @@
 import React, { useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { FavorQuantityContext } from '../context/userContext';
-import { FavoritesContext } from '../types/models';
+import { UserAppContext } from '../context/userContext';
+import { UserContext } from '../types/models';
 import UserDataHandlerToLS from '../utils/userDataWriter';
 import styles from './LoginBlock.module.css';
 
 export default function LoginBlock() {
-  const { favorites } = useContext(FavorQuantityContext) as FavoritesContext;
+  const { favorites } = useContext(UserAppContext) as UserContext;
   const numbers = favorites;
   const navigate = useNavigate();
   const { name } = UserDataHandlerToLS.getCurrentUser();
   const logOut = () => {
     localStorage.removeItem('currentUser');
-    navigate('/');
+    navigate('/signin');
   };
 
   if (name) {
@@ -30,8 +30,8 @@ export default function LoginBlock() {
   }
   return (
     <div className={styles.loginblock}>
-      <Link to="/signup" className={styles.loginBtn}>Регистрация</Link>
-      <Link to="/signin" className={styles.loginBtn}>Вход</Link>
+      <Link to="/signup" className={styles.loginBtn}>Sign up</Link>
+      <Link to="/signin" className={styles.loginBtn}>Sign in</Link>
     </div>
   );
 }

@@ -25,7 +25,7 @@ export default function Search() {
   }
   const startPage = lastUserPage.split('&').filter((x) => !x.includes('_cont')).join('&');
   const isFirstPage = !!lastUserPage.split('&').filter((x) => x.includes('_cont')).length;
-
+  const [isFirst, setFirstPageStat] = useState(isFirstPage);
   useEffect(() => {
     const obj = new URLSearchParams(lastUserPage);
     setSearchParams(obj);
@@ -50,12 +50,16 @@ export default function Search() {
     UserDataHandlerToLS.setHistory(email, nextPageQuery);
     dispatch(addHistory(nextPageQuery));
     setCurrentPage(nextPageQuery);
+    setFirstPageStat(true);
   };
   const navigateToMain = () => {
     navigate('/');
   };
 
-  const handleToStartClick = () => setCurrentPage(startPage);
+  const handleToStartClick = () => {
+    setCurrentPage(startPage);
+    setFirstPageStat(false);
+  };
   return (
     <div>
       { isLoading ? (
@@ -72,7 +76,7 @@ export default function Search() {
             {(results.count > 20) && (
               <div className={styles.controls}>
                 <button type="button" onClick={navigateToMain}>To search panel</button>
-                {isFirstPage && (<button type="button" onClick={handleToStartClick}>To first page</button>)}
+                {isFirst && (<button type="button" onClick={handleToStartClick}>To first page</button>)}
                 <button type="button" onClick={handleNextPageClick}>Next page</button>
               </div>
             )}

@@ -1,4 +1,4 @@
 import { createContext } from 'react';
-import { FavoritesContext } from '../types/models';
+import { UserContext } from '../types/models';
 
-export const FavorQuantityContext = createContext<FavoritesContext | null>(null);
+export const UserAppContext = createContext<UserContext | null>(null);
