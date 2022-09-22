@@ -8,18 +8,18 @@ import styles from './Auth.module.css';
 export function Signin() {
   const [email, setEmail] = useState('');
   const [password, setPass] = useState('');
-  const [errorMsg, setMsg] = useState('');
+  const [userLoginMsg, setUserLoginMsg] = useState('');
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   function handleSubmit(event: React.FormEvent) {
     event.preventDefault();
     if (UserDataHandlerToLS.verifyLogin(email, password)) {
-      setMsg('Вход выполнен успешно!');
+      setUserLoginMsg('Вход выполнен успешно!');
       UserDataHandlerToLS.setCurrentUser(email);
       dispatch(signIn({ email }));
       navigate('/');
     } else {
-      setMsg('Email или пароль неверны!');
+      setUserLoginMsg('Email или пароль неверны!');
     }
   }
   return (
@@ -58,7 +58,7 @@ export function Signin() {
           </button>
         </div>
       </form>
-      <p>{errorMsg}</p>
+      <p>{userLoginMsg}</p>
     </section>
   );
 }

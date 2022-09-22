@@ -51,3 +51,8 @@ export interface ErrorBoundaryState {
   error?: Error,
   errorInfo?: ErrorInfo;
 }
+
+export interface FavoritesContext {
+  favorites: number,
+  setFavorites: (value: number) => void,
+}

@@ -1,10 +1,12 @@
 /* eslint-disable no-nested-ternary */
 import { SerializedError } from '@reduxjs/toolkit/dist/createAsyncThunk';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
+import { FavorQuantityContext } from '../context/userContext';
 import { useAppDispatch } from '../redux/hooks';
 import { useGetRecipeByIdQuery } from '../redux/recipeAPI';
 import { addFavorite, removeFavourite } from '../redux/userSlice';
+import { FavoritesContext } from '../types/models';
 import { Hit } from '../types/responceTypes';
 import UserDataHandlerToLS from '../utils/userDataWriter';
 import styles from './Recipe.module.css';
@@ -17,6 +19,7 @@ export default function Recipe() {
   const {
     isLoading,
   } = useGetRecipeByIdQuery(recipeQuery);
+  const { favorites, setFavorites } = useContext(FavorQuantityContext) as FavoritesContext;
   const error = useGetRecipeByIdQuery(recipeQuery).error as SerializedError;
   const data = useGetRecipeByIdQuery(recipeQuery).data as Hit || { recipe: '' };
   const recipeData = data as Hit;
@@ -51,9 +54,11 @@ export default function Recipe() {
       if (!favourStatus) {
         dispatch(addFavorite(recipeQuery));
         UserDataHandlerToLS.addToFavorites(email, recipeQuery);
+        setFavorites(favorites + 1);
       } else {
         dispatch(removeFavourite(recipeQuery));
         UserDataHandlerToLS.deleteFromFavorites(email, recipeQuery);
+        setFavorites(favorites - 1);
       }
       SetFavourStatus(!favourStatus);
     };
