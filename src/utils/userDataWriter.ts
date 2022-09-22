@@ -87,6 +87,6 @@ export default class UserDataHandlerToLS extends UserDataHandler {
   static getCurrentUser() {
     if (localStorage.getItem('currentUser')) {
       return JSON.parse(localStorage.getItem('currentUser') || '');
-    } return '';
+    } return { email: '' };
   }
 }

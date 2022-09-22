@@ -21,7 +21,8 @@ const Recipe = lazy(() => import('./pages/Recipe'));
 
 function App() {
   const { email } = UserDataHandlerToLS.getCurrentUser();
-  const favoritesQuantity = UserDataHandlerToLS.getFavorites(email).length;
+  let favoritesQuantity = 0;
+  if (email) favoritesQuantity = UserDataHandlerToLS.getFavorites(email).length;
   const [favorites, setFavorites] = useState(favoritesQuantity);
   const appFavorContext: FavoritesContext = {
     favorites,

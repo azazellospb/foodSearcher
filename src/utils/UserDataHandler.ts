@@ -21,7 +21,7 @@ export default abstract class UserDataHandler {
     throw new Error(`Method ${this.name} with data: ${email} should be implemented!`);
   }
 
-  static getCurrentUser(): string {
+  static getCurrentUser(): { email: string } {
     throw new Error(`Method ${this.name}`);
   }
 

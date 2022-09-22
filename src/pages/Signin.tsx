@@ -15,7 +15,6 @@ export function Signin() {
     event.preventDefault();
     if (UserDataHandlerToLS.verifyLogin(email, password)) {
       setUserLoginMsg('Вход выполнен успешно!');
-      UserDataHandlerToLS.setCurrentUser(email);
       dispatch(signIn({ email }));
       navigate('/');
     } else {
