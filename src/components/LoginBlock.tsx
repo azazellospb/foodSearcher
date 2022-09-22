@@ -1,9 +1,13 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { FavorQuantityContext } from '../context/userContext';
+import { FavoritesContext } from '../types/models';
 import UserDataHandlerToLS from '../utils/userDataWriter';
 import styles from './LoginBlock.module.css';
 
 export default function LoginBlock() {
+  const { favorites } = useContext(FavorQuantityContext) as FavoritesContext;
+  const numbers = favorites;
   const navigate = useNavigate();
   const { name } = UserDataHandlerToLS.getCurrentUser();
   const logOut = () => {
@@ -15,7 +19,10 @@ export default function LoginBlock() {
     return (
       <div className={styles.login}>
         <span className={styles.userName}>{name}</span>
-        <Link to="/favorites" className={styles.loginBtn}>Favorites</Link>
+        <Link to="/favorites" className={styles.loginBtn}>
+          Favorites
+          {` (${numbers})`}
+        </Link>
         <Link to="/history" className={styles.loginBtn}>Search history</Link>
         <button className={styles.logoutBtn} type="button" onClick={logOut}>Выйти</button>
       </div>

@@ -1,9 +1,11 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import React from 'react';
+import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { FavorQuantityContext } from '../context/userContext';
 import { useAppDispatch } from '../redux/hooks';
 import { useGetRecipeByIdQuery } from '../redux/recipeAPI';
 import { addFavorite, removeFavourite } from '../redux/userSlice';
+import { FavoritesContext } from '../types/models';
 import { Hit } from '../types/responceTypes';
 import UserDataHandlerToLS from '../utils/userDataWriter';
 import styles from './RecipeCard.module.css';
@@ -12,6 +14,7 @@ export default function FavoriteCard(props: {
   recipeId: string,
   refreshParent: (parentState: string) => void,
 }) {
+  const { favorites, setFavorites } = useContext(FavorQuantityContext) as FavoritesContext;
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { recipeId, refreshParent } = props;
@@ -43,10 +46,12 @@ export default function FavoriteCard(props: {
       if (!isFavorite) {
         dispatch(addFavorite(recipeId));
         UserDataHandlerToLS.addToFavorites(email, recipeId);
+        setFavorites(favorites + 1);
       } else {
         dispatch(removeFavourite(recipeId));
         UserDataHandlerToLS.deleteFromFavorites(email, recipeId);
         refreshParent(recipeId);
+        setFavorites(favorites - 1);
       }
     };
     return (
