@@ -2,11 +2,11 @@
 import { SerializedError } from '@reduxjs/toolkit/dist/createAsyncThunk';
 import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { FavorQuantityContext } from '../context/userContext';
+import { UserAppContext } from '../context/userContext';
 import { useAppDispatch } from '../redux/hooks';
 import { useGetRecipeByIdQuery } from '../redux/recipeAPI';
 import { addFavorite, removeFavourite } from '../redux/userSlice';
-import { FavoritesContext } from '../types/models';
+import { UserContext } from '../types/models';
 import { Hit } from '../types/responceTypes';
 import UserDataHandlerToLS from '../utils/userDataWriter';
 import styles from './Recipe.module.css';
@@ -19,11 +19,14 @@ export default function Recipe() {
   const {
     isLoading,
   } = useGetRecipeByIdQuery(recipeQuery);
-  const { favorites, setFavorites } = useContext(FavorQuantityContext) as FavoritesContext;
+  const { favorites, setFavorites } = useContext(UserAppContext) as UserContext;
   const error = useGetRecipeByIdQuery(recipeQuery).error as SerializedError;
   const data = useGetRecipeByIdQuery(recipeQuery).data as Hit || { recipe: '' };
   const recipeData = data as Hit;
-  const isFavorite = UserDataHandlerToLS.getFavorites(email).indexOf(recipeQuery) !== -1;
+  let isFavorite = false;
+  if (email) {
+    isFavorite = UserDataHandlerToLS.getFavorites(email).indexOf(recipeQuery) !== -1;
+  }
   const [favourStatus, SetFavourStatus] = useState(isFavorite);
   const [, setSearchParams] = useSearchParams();
   useEffect(() => {
@@ -84,12 +87,14 @@ export default function Recipe() {
                   <span>{`Dish type: ${dishType}. `}</span>
                   <span>{`Cuisine type: ${cuisineType}. `}</span>
                   <span>{`Meal type: ${mealType}. `}</span>
-                  Ingredients:
+                  <div>Ingredients:</div>
                   {ingredientLines.map((ingredient) => <div key={ingredient}>{ingredient}</div>)}
-                  <button type="button" id={recipeQuery} onClick={toggleFavorStat}>
-                    {!favourStatus && ('Add to favorites')}
-                    {favourStatus && ('Remove from favorites')}
-                  </button>
+                  {email && (
+                    <button type="button" id={recipeQuery} onClick={toggleFavorStat}>
+                      {!favourStatus && ('Add to favorites')}
+                      {favourStatus && ('Remove from favorites')}
+                    </button>
+                  )}
                 </div>
               </div>
               <div className={styles.recipeBlock__mainInfo}>

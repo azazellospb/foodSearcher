@@ -12,8 +12,8 @@ import { Favorites } from './pages/Favorites';
 import { Signin } from './pages/Signin';
 import { Signup } from './pages/Signup';
 import { ErrorBoundary } from './components/ErrorBoundary';
-import { FavorQuantityContext } from './context/userContext';
-import { FavoritesContext } from './types/models';
+import { UserAppContext } from './context/userContext';
+import { UserContext } from './types/models';
 import UserDataHandlerToLS from './utils/userDataWriter';
 
 const Search = lazy(() => import('./pages/Search'));
@@ -21,16 +21,18 @@ const Recipe = lazy(() => import('./pages/Recipe'));
 
 function App() {
   const { email } = UserDataHandlerToLS.getCurrentUser();
-  const favoritesQuantity = UserDataHandlerToLS.getFavorites(email).length;
+  let favoritesQuantity = 0;
+  if (email) {
+    favoritesQuantity = UserDataHandlerToLS.getFavorites(email).length;
+  }
   const [favorites, setFavorites] = useState(favoritesQuantity);
-  const appFavorContext: FavoritesContext = {
+  const appContext: UserContext = {
     favorites,
     setFavorites,
   };
-
   return (
     <ErrorBoundary>
-      <FavorQuantityContext.Provider value={appFavorContext}>
+      <UserAppContext.Provider value={appContext}>
         <Suspense fallback={<div>Loading...</div>}>
           <Routes>
             <Route path="/" element={<Layout />}>
@@ -44,7 +46,7 @@ function App() {
             </Route>
           </Routes>
         </Suspense>
-      </FavorQuantityContext.Provider>
+      </UserAppContext.Provider>
     </ErrorBoundary>
   );
 }
