@@ -24,7 +24,7 @@ export default function LoginBlock() {
           {` (${numbers})`}
         </Link>
         <Link to="/history" className={styles.loginBtn}>Search history</Link>
-        <button className={styles.logoutBtn} type="button" onClick={logOut}>Выйти</button>
+        <button className={styles.logoutBtn} type="button" onClick={logOut}>Log out</button>
       </div>
     );
   }

@@ -9,10 +9,10 @@ import * as List from '../types/optionLists';
 import Dropdown from './Dropdown';
 import { QueryParams } from '../types/models';
 import { makeUrl } from '../tools/urlMaker';
-import { useAppDispatch } from '../redux/hooks';
+import { useAppDispatch, useDebounce } from '../redux/hooks';
 import { addHistory } from '../redux/userSlice';
 import { useGetSuggestsQuery } from '../redux/recipeAPI';
-import { debounce } from '../tools/debouncer';
+// import { debounce } from '../tools/debouncer';
 
 export default function SearchForm() {
   const dispatch = useAppDispatch();
@@ -59,6 +59,7 @@ export default function SearchForm() {
   const handleInput = () => {
     setQueryVal(getValues('q') || '');
   };
+  const debouncedSearch = useDebounce(handleInput, 2000);
 
   return (
     <form
@@ -82,7 +83,7 @@ export default function SearchForm() {
               })}
               autoComplete="off"
               placeholder="3 letters minimum"
-              onInput={debounce(handleInput, 2000)}
+              onInput={() => debouncedSearch}
               onClick={() => setDisplaySuggests(false)}
             />
             {displaySuggests && (
