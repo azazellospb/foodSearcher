@@ -1,11 +1,9 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import React, { useContext } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { FavorQuantityContext } from '../context/userContext';
 import { useAppDispatch } from '../redux/hooks';
 import { useGetRecipeByIdQuery } from '../redux/recipeAPI';
 import { addFavorite, removeFavourite } from '../redux/userSlice';
-import { FavoritesContext } from '../types/models';
 import { Hit } from '../types/responceTypes';
 import UserDataHandlerToLS from '../utils/userDataWriter';
 import styles from './RecipeCard.module.css';
@@ -14,13 +12,13 @@ export default function FavoriteCard(props: {
   recipeId: string,
   refreshParent: (parentState: string) => void,
 }) {
-  const { favorites, setFavorites } = useContext(FavorQuantityContext) as FavoritesContext;
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { recipeId, refreshParent } = props;
 
   const { email } = UserDataHandlerToLS.getCurrentUser();
-  const isFavorite = UserDataHandlerToLS.getFavorites(email).indexOf(recipeId) !== -1;
+  let isFavorite = false;
+  if (email) isFavorite = UserDataHandlerToLS.getFavorites(email).indexOf(recipeId) !== -1;
 
   const {
     data = { recipe: '' },
@@ -46,12 +44,10 @@ export default function FavoriteCard(props: {
       if (!isFavorite) {
         dispatch(addFavorite(recipeId));
         UserDataHandlerToLS.addToFavorites(email, recipeId);
-        setFavorites(favorites + 1);
       } else {
         dispatch(removeFavourite(recipeId));
         UserDataHandlerToLS.deleteFromFavorites(email, recipeId);
         refreshParent(recipeId);
-        setFavorites(favorites - 1);
       }
     };
     return (
@@ -61,10 +57,12 @@ export default function FavoriteCard(props: {
         <p>{`Recipe from: ${source}`}</p>
         <p>{`Total calories: ${calories.toFixed(0)}`}</p>
         <button id={recipeId} type="button" onClick={(e) => handleClick(e)}>See details</button>
-        <button type="button" onClick={toggleFavorStat}>
-          {!isFavorite && ('Add to favorites')}
-          {isFavorite && ('Remove from favorites')}
-        </button>
+        {email && (
+          <button type="button" onClick={toggleFavorStat}>
+            {!isFavorite && ('Add to favorites')}
+            {isFavorite && ('Remove from favorites')}
+          </button>
+        )}
       </div>
     );
   } return (<div>Loading...</div>);

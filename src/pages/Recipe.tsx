@@ -23,7 +23,10 @@ export default function Recipe() {
   const error = useGetRecipeByIdQuery(recipeQuery).error as SerializedError;
   const data = useGetRecipeByIdQuery(recipeQuery).data as Hit || { recipe: '' };
   const recipeData = data as Hit;
-  const isFavorite = UserDataHandlerToLS.getFavorites(email).indexOf(recipeQuery) !== -1;
+  let isFavorite = false;
+  if (email) {
+    isFavorite = UserDataHandlerToLS.getFavorites(email).indexOf(recipeQuery) !== -1;
+  }
   const [favourStatus, SetFavourStatus] = useState(isFavorite);
   const [, setSearchParams] = useSearchParams();
   useEffect(() => {
@@ -84,12 +87,14 @@ export default function Recipe() {
                   <span>{`Dish type: ${dishType}. `}</span>
                   <span>{`Cuisine type: ${cuisineType}. `}</span>
                   <span>{`Meal type: ${mealType}. `}</span>
-                  Ingredients:
+                  <div>Ingredients:</div>
                   {ingredientLines.map((ingredient) => <div key={ingredient}>{ingredient}</div>)}
-                  <button type="button" id={recipeQuery} onClick={toggleFavorStat}>
-                    {!favourStatus && ('Add to favorites')}
-                    {favourStatus && ('Remove from favorites')}
-                  </button>
+                  {email && (
+                    <button type="button" id={recipeQuery} onClick={toggleFavorStat}>
+                      {!favourStatus && ('Add to favorites')}
+                      {favourStatus && ('Remove from favorites')}
+                    </button>
+                  )}
                 </div>
               </div>
               <div className={styles.recipeBlock__mainInfo}>

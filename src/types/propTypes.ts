@@ -46,7 +46,7 @@ const Ingredient = PropTypes.shape({
   measure: PropTypes.string,
   food: PropTypes.string.isRequired,
   weight: PropTypes.number.isRequired,
-  foodCategory: PropTypes.string.isRequired,
+  foodCategory: PropTypes.string,
   foodId: PropTypes.string.isRequired,
   image: PropTypes.string,
 });

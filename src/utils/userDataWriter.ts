@@ -31,6 +31,10 @@ export default class UserDataHandlerToLS extends UserDataHandler {
   }
 
   static setHistory(email: string, query: string): void {
+    if (!email) {
+      localStorage.setItem('lastQuery', query);
+      return;
+    }
     const userData: UserData = JSON.parse(localStorage.getItem(`foodSearcher-${email}`) as string);
     if (!userData.history) userData.history = [];
     const cleanQuery = query.split('%20').join(' ').split('&').filter((pair) => !pair.includes('_'))
@@ -55,6 +59,7 @@ export default class UserDataHandlerToLS extends UserDataHandler {
   }
 
   static getLastQuery(email:string): string {
+    if (!email) return localStorage.getItem('lastQuery') || '';
     const userData: UserData = JSON.parse(localStorage.getItem(`foodSearcher-${email}`) as string);
     if (!userData.history) return '';
     return userData.history[userData.history.length - 1];
