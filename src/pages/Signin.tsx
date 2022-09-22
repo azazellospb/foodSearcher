@@ -54,7 +54,7 @@ export function Signin() {
         </div>
         <div className={styles.signin__buttons}>
           <button type="submit" className={styles.btn}>
-            Войти
+            Log in
           </button>
         </div>
       </form>
