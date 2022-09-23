@@ -3,42 +3,42 @@ import PropTypes from 'prop-types';
 const self = PropTypes.shape({
   href: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
-});
+}).isRequired;
 
 const Links2 = PropTypes.shape({
   self,
-});
+}).isRequired;
 
 const Small = PropTypes.shape({
   url: PropTypes.string.isRequired,
   width: PropTypes.number.isRequired,
   height: PropTypes.number.isRequired,
-});
+}).isRequired;
 
 const Regular = PropTypes.shape({
   url: PropTypes.string.isRequired,
   width: PropTypes.number.isRequired,
   height: PropTypes.number.isRequired,
-});
+}).isRequired;
 
 const Large = PropTypes.shape({
   url: PropTypes.string.isRequired,
   width: PropTypes.number.isRequired,
   height: PropTypes.number.isRequired,
-});
+}).isRequired;
 
 const Thumbnail = PropTypes.shape({
   url: PropTypes.string.isRequired,
   width: PropTypes.number.isRequired,
   height: PropTypes.number.isRequired,
-});
+}).isRequired;
 
 const Images = PropTypes.shape({
-  THUMBNAIL: Thumbnail.isRequired,
-  SMALL: Small.isRequired,
-  REGULAR: Regular.isRequired,
+  THUMBNAIL: Thumbnail,
+  SMALL: Small,
+  REGULAR: Regular,
   LARGE: Large,
-});
+}).isRequired;
 
 const Ingredient = PropTypes.shape({
   text: PropTypes.string.isRequired,
@@ -49,13 +49,13 @@ const Ingredient = PropTypes.shape({
   foodCategory: PropTypes.string,
   foodId: PropTypes.string.isRequired,
   image: PropTypes.string,
-});
+}).isRequired;
 
 const elemData = PropTypes.shape({
   label: PropTypes.string.isRequired,
   quantity: PropTypes.number.isRequired,
   unit: PropTypes.string.isRequired,
-});
+}).isRequired;
 
 const TotalNutrients = PropTypes.shape({
   ENERC_KCAL: elemData,
@@ -90,7 +90,7 @@ const TotalNutrients = PropTypes.shape({
   TOCPHA: elemData,
   VITK1: elemData,
   WATER: elemData,
-});
+}).isRequired;
 
 const Sub = PropTypes.shape({
   label: PropTypes.string,
@@ -100,7 +100,7 @@ const Sub = PropTypes.shape({
   hasRDI: PropTypes.bool,
   daily: PropTypes.number,
   unit: PropTypes.string,
-});
+}).isRequired;
 
 const Digest = PropTypes.shape({
   label: PropTypes.string,
@@ -111,7 +111,7 @@ const Digest = PropTypes.shape({
   daily: PropTypes.number,
   unit: PropTypes.string,
   sub: PropTypes.arrayOf(Sub),
-});
+}).isRequired;
 
 const Recipe = PropTypes.shape({
   uri: PropTypes.string,
@@ -136,9 +136,26 @@ const Recipe = PropTypes.shape({
   totalNutrients: TotalNutrients,
   totalDaily: TotalNutrients,
   digest: PropTypes.arrayOf(Digest),
-});
+}).isRequired;
 
 export const HitPropType = PropTypes.shape({
   recipe: Recipe,
   _links: Links2,
+}).isRequired;
+
+export const Next = PropTypes.shape({
+  href: PropTypes.string,
+  title: PropTypes.string,
 });
+
+export const Links = PropTypes.shape({
+  next: Next,
+});
+
+export const SearchResultProps = PropTypes.shape({
+  from: PropTypes.number,
+  to: PropTypes.number,
+  count: PropTypes.number,
+  _links: Links,
+  hits: PropTypes.arrayOf(HitPropType),
+}).isRequired;

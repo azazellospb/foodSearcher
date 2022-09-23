@@ -82,15 +82,13 @@ export default function Search() {
             )}
           </section>
           <section className={styles.results}>
-            {
-              results.hits
-                .map(
-                  (item) => <RecipeCard key={item.recipe.image} item={item} />,
-                )
-            }
+            {results.hits
+              .map((item) => <RecipeCard key={item.recipe.image} item={item} />)}
           </section>
         </>
       ) : null}
     </div>
   );
 }
+
+// export default Search;

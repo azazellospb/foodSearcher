@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import PropTypes from 'prop-types';
+import PropTypes, { InferProps } from 'prop-types';
 import { useAppDispatch } from '../redux/hooks';
 import { addHistory } from '../redux/userSlice';
 import { objMaker } from '../tools/objMaker';
@@ -9,10 +9,7 @@ import { makeUrl } from '../tools/urlMaker';
 import UserDataHandlerToLS from '../utils/userDataWriter';
 import styles from './HistoryCard.module.css';
 
-function HistoryCard(props: {
-  item: string,
-  refreshParent: (parentState: string) => void,
-}) {
+function HistoryCard(props: HistoryCardProps) {
   const { item, refreshParent } = props;
 
   const { email } = UserDataHandlerToLS.getCurrentUser();
@@ -50,6 +47,9 @@ function HistoryCard(props: {
 
 HistoryCard.propTypes = {
   item: PropTypes.string.isRequired,
+  refreshParent: PropTypes.func.isRequired,
 };
+
+type HistoryCardProps = InferProps<typeof HistoryCard.propTypes>;
 
 export default HistoryCard;
