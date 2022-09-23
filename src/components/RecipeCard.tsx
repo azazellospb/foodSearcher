@@ -1,23 +1,22 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Hit } from '../types/responceTypes';
+import { InferProps } from 'prop-types';
+// import { Hit } from '../types/responceTypes';
 import styles from './RecipeCard.module.css';
 import { HitPropType } from '../types/propTypes';
 
-function RecipeCard(props: { item: Hit }) {
+function RecipeCard<Hit>(props: RecipeCardProps | { item: Hit }) {
   const navigate = useNavigate();
-  const { item } = props;
+  const { item } = props as RecipeCardProps;
   const {
     _links,
     recipe,
   } = item;
-  const {
-    image,
-    label,
-    source,
-    calories,
-  } = recipe;
+  const image = recipe.image as string;
+  const label = recipe.label as string;
+  const source = recipe.source as string;
+  const calories = recipe.calories as number;
   const recipeLink = _links.self.href.split('v2/')[1];
   const handleClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     const button = event.target as HTMLButtonElement;
@@ -27,7 +26,7 @@ function RecipeCard(props: { item: Hit }) {
   };
   return (
     <div className={styles.card}>
-      <img src={image} alt={label} />
+      <img src={image as string} alt={label as string} />
       <h3>{label}</h3>
       <p>{`Recipe from: ${source}`}</p>
       <p>{`Total calories: ${calories.toFixed(0)}`}</p>
@@ -37,7 +36,12 @@ function RecipeCard(props: { item: Hit }) {
 }
 
 RecipeCard.propTypes = {
-  item: HitPropType.isRequired,
+  item: HitPropType,
 };
+RecipeCard.defaultProps = {
+  item: {},
+};
+
+type RecipeCardProps = InferProps<typeof RecipeCard.propTypes>;
 
 export default RecipeCard;
