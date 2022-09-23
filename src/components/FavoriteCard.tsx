@@ -1,9 +1,11 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import React from 'react';
+import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { UserAppContext } from '../context/userContext';
 import { useAppDispatch } from '../redux/hooks';
 import { useGetRecipeByIdQuery } from '../redux/recipeAPI';
 import { addFavorite, removeFavourite } from '../redux/userSlice';
+import { UserContext } from '../types/models';
 import { Hit } from '../types/responceTypes';
 import UserDataHandlerToLS from '../utils/userDataWriter';
 import styles from './RecipeCard.module.css';
@@ -15,7 +17,7 @@ export default function FavoriteCard(props: {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { recipeId, refreshParent } = props;
-
+  const { favorites, setFavorites } = useContext(UserAppContext) as UserContext;
   const { email } = UserDataHandlerToLS.getCurrentUser();
   let isFavorite = false;
   if (email) isFavorite = UserDataHandlerToLS.getFavorites(email).indexOf(recipeId) !== -1;
@@ -44,10 +46,12 @@ export default function FavoriteCard(props: {
       if (!isFavorite) {
         dispatch(addFavorite(recipeId));
         UserDataHandlerToLS.addToFavorites(email, recipeId);
+        setFavorites(favorites + 1);
       } else {
         dispatch(removeFavourite(recipeId));
         UserDataHandlerToLS.deleteFromFavorites(email, recipeId);
         refreshParent(recipeId);
+        setFavorites(favorites - 1);
       }
     };
     return (

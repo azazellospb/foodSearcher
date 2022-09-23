@@ -1,0 +1,60 @@
+Проект. 1 уровень (необходимый минимум):
+
+1. React:
+- Пишем функциональные компоненты c хуками в приоритете над классовыми:
+    Классовый компонент предохранитель - src\components\ErrorBoundary.tsx,
+    остальные функциональные.
+- Разделение на умные и глупые компоненты:
+    концепция проработана на примерах:
+    примеры глупых компонентов: 
+    - src\components\Dropdown.tsx;
+    - src\components\HistoryCard.tsx.
+
+    примеры умных компонентов:
+    - src\components\FavoriteCard.tsx;
+    - src\pages\Search.tsx;
+    - src\components\SearchForm.tsx.
+    
+- Есть рендеринг списков, примеры:
+  - src\pages\Search.tsx;
+  - src\pages\History.tsx.
+
+- Реализована хотя бы одна форма:
+  - src\components\SearchForm.tsx.
+
+- Есть применение Контекст API:
+  - src\App.tsx (количество рецептов в избранном в скобках рядом с Favorites в шапке).
+
+- Есть применение предохранителя:
+  - src\components\ErrorBoundary.tsx.
+
+- Есть хотя бы один кастомный хук:
+  - src\redux\hooks.ts (useDebounce).
+
+- Хотя бы несколько компонентов используют PropTypes:
+  - src\components\RecipeCard.tsx;
+  - src\components\HistoryCard.tsx.
+
+- Поиск не должен триггерить много запросов к серверу:
+  - src\components\SearchForm.tsx (в компоненте использован useDebounce custom hook).
+
+- Есть применение lazy + Suspense:
+  - src\App.tsx (загрузка единицы информации и результатов поиска).
+
+
+2. Redux:
+- Используем Modern Redux with Redux Toolkit:
+  - src\redux\store.ts;
+  - src\redux\userSlice.ts.
+
+- Используем слайсы:
+  - src\redux\userSlice.ts.
+
+- Есть хотя бы одна кастомная мидлвара:
+  - src\redux\lsMiddleware.tsx.
+
+- Используется RTK Query:
+  - src\redux\recipeAPI.ts.
+
+- Используется Transforming Responses:
+  - src\redux\recipeAPI.ts (строка 16, getSuggests).
